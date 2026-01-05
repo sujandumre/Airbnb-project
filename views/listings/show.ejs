@@ -2,7 +2,7 @@
 
 <div class="row mt-3">
   <div class="col-8 offset-3">
-    <h3>Listing Details</h3>
+    <h3><%= listing.title%></h3>
   </div>
 
   <div class="card col-6 offset-3 show-card">
@@ -13,7 +13,7 @@
     <% } %>
     <div class="card-body">
       <p class="card-text">
-        <b><%= listing.title || "No title available" %></b>
+        
       </p>
       <br/>
       <%= listing.description || "No description available" %><br/>
@@ -32,4 +32,24 @@
   <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
     <button class="btn btn-dark offset-5">Delete</button>
   </form>
+</div>
+<div class="col-8 offset">
+  <h4>Leave a Review</h4>
+<form action="/listings/<%=listing.id %>/reviews" method="POST"  novalidate class="needs-validation">
+  <div class="mb-3 mt-3">
+    <label for="rating" class="form-label">Rating
+    </label>
+    <input type="range" min="1" max="5" id="rating" name="review[rating]" class="form-range"/>
+  </div>
+
+  <div>
+    <label for="comment" class="form-label">comments</label>
+    <textarea id="comment" name="review[comment]" cols="30" rows="10"  class="form-label" required></textarea>
+    <div class="invalid-feedback">Please add some comments for review</div>
+  </div>
+  <button class="btn btn-outline">Submit</button>
+</form>
+</hr>
+<h4>All Reviews</h4>
+<p><%=listing.reviews %></p>
 </div>
