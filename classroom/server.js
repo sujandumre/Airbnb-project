@@ -2,39 +2,81 @@ const express=require('express');
 const app=express();
 const users=require("./routes/user.js");
 const posts =require("./routes/post.js");
-const cookieParser = require('cookie-parser');
+const session= require('express-session');
+const flash=require('connect-flash');
+const path=require('path');
 
-app.use(cookieParser("secretcode"));
+app.set("view engine","ejs");
+app.set("views",path.join(__dirname,"/views"));
 
-app.use('/getsignedcookie',(req,res)=>{
-  res.cookie("color","red",{signed:true});
-  res.send("done!");
+const sessionOptions={
+  secret:"mysecrectcodestring",
+  resave:false,
+  saveUninitialized:true
+}
+app.use(session(sessionOptions));
+app.use(flash());
+
+app.get('/register',(req,res)=>{
+let {name="annonomyous"}=req.query;
+req.session.name=name;
+req.flash('sucess','user registered successfully');
+res.redirect('/hello');
 });
 
-app.get('/verify',(req,res)=>{
-  console.log(req.signedCookies);
-  // res.send(req.signedCookies);
-  res.send("verifyied!");
+app.get('/hello',(req,res)=>{
+
+  res.render('page.ejs',{name:req.session.name, messages:req.flash('sucess')});
 });
 
-app.get("/getcookies",(req,res)=>{
-  res.cookie("greet","namaste");
-  res.cookie("MadeIn","Nepal");
+// app.get('/reqcount',(req,res)=>{
+//   if(req.session.count){
+//     req.session.count++;
+//   }else{
+//     req.session.count=1;
+//   }
+//   res.send(`you send a request ${req.session.count} times`);
+// });
 
-  res.send("sent you some cookies!");
-});
+// app.get('/test',(req,res)=>{
+// res.send("test sucessful!");
+// }
+// );
 
-app.get("/greet",(req,res)=>{
-  let {name="anonymous"}=req.cookies;
-  res.send(`hello ${name}`);
-});
 
-app.get("/",(req,res)=>{
-  console.dir(req.cookies);
-  res.send("hi, i am root!");
-});
-app.use("/users",users);
-app.use("/posts",posts);
+// const cookieParser = require('cookie-parser');
+
+// app.use(cookieParser("secretcode"));
+
+// app.use('/getsignedcookie',(req,res)=>{
+//   res.cookie("color","red",{signed:true});
+//   res.send("done!");
+// });
+
+// app.get('/verify',(req,res)=>{
+//   console.log(req.signedCookies);
+//   // res.send(req.signedCookies);
+//   res.send("verifyied!");
+// });
+
+// app.get("/getcookies",(req,res)=>{
+//   res.cookie("greet","namaste");
+//   res.cookie("MadeIn","Nepal");
+
+//   res.send("sent you some cookies!");
+// });
+
+// app.get("/greet",(req,res)=>{
+//   let {name="anonymous"}=req.cookies;
+//   res.send(`hello ${name}`);
+// });
+
+// app.get("/",(req,res)=>{
+//   console.dir(req.cookies);
+//   res.send("hi, i am root!");
+// });
+// app.use("/users",users);
+// app.use("/posts",posts);
 
 app.listen(3000,()=>{
   console.log("server is listening to 3000");
