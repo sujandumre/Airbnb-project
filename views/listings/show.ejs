@@ -13,13 +13,12 @@
     <% } %>
     <div class="card-body">
       <p class="card-text">
-        
-      </p>
       <br/>
+      <p>owned by <i><%= listing.owner.username%></i></p><br/>
       <%= listing.description || "No description available" %><br/>
       &#8377;<%= listing.price ? listing.price.toLocaleString("en-IN") : "N/A" %><br/>
       <%= listing.location || "Location not provided" %><br/>
-      <%= listing.country || "Country not provided" %>
+      <%= listing.country || "Country not provided" %></p>
     </div>
   </div>
 
