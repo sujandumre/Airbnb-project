@@ -9,14 +9,9 @@ const listingSchema = new Schema({
   },
   
   description:String,
-  // image:{
-  // type:String,
-  // default:"https://unsplash.com/photos/red-ferrari-458-italia-on-road-during-daytime-YuUjJUBk6pY",
-  //   set:(v)=>v==="" ? 
-  //   "https://unsplash.com/photos/red-ferrari-458-italia-on-road-during-daytime-YuUjJUBk6pY":v,
-    image: {
-    filename: String,
-    url: String
+  image:{
+  url:String,
+  filename:String,
   },
 
   price:Number,
