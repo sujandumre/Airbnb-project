@@ -79,9 +79,9 @@ app.use((req, res, next) => {
 // res.send(registeredUser);
 // });
 
-app.get('/',(req,res)=>{
-  res.send("hi there");
-});
+// app.get('/',(req,res)=>{
+//   res.send("hi there");
+// });
 
 
 
