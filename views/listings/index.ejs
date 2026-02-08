@@ -114,14 +114,15 @@
     
     <p class="card-text">
   <b><%= listing.title %></b><br>
-<!-- 
+
   <%# if (listing.price !== undefined && listing.price !== null) { %>
-    ₹ <%#= Number(listing.price).toLocaleString("en-IN") %> / night
-  <%# } else { %>
-    <span class="text-muted">Price not available</span>
-  <%# } %> -->
-  &#8377; <%=listing.price.toLocalString('en-IN')%> / night
+    ₹ <%= Number(listing.price).toLocaleString("en-IN") %> / night
+  <%#} else { %>
+    <!-- <span class="text-muted">Price not available</span> -->
+  <%# } %>
+   <%#=listing.price.toLocalString('en-IN')%> 
   <i class="tax-info">&nbsp; &nbsp; +18% GST</i>
+  
 </p>
 
     
