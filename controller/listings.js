@@ -88,4 +88,14 @@ module.exports.deleteListing =async (req, res) => {
 };
 
 
+module.exports.search = async (req, res) => {
+  console.log(req.query.q);
+  let input = req.query.q.trim().replace(/\s+/g, " "); // remove start and end space and middle space remove and middle add one space------
+  console.log(input);
+  if (input == "" || input == " ") {
+    //search value empty
+    req.flash("error", "Search value empty !!!");
+    res.redirect("/listings");
+  }
 
+};
