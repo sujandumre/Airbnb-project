@@ -38,20 +38,36 @@ app.use(methodOverride('_method'));
 app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname,'/public')));
 
+
+const store = MongoStore.create({
+  mongoUrl:dbUrl,
+  crypto:{
+    secret:'mysecretcode',
+  },
+  touchAfter:24* 3600,
+});
+
+store.on("error", ()=>{
+  console.log("ERROR IN MONGO SESSION STORE",err);
+});
+
 const sessionOptions={
+  store,
   secret:'mysecretcode',
   resave:false,
   saveUnintialized:true,
   cookie:{
     expires:Date.now()+7*24* 60*60 *1000,
     maxAge:7*24*60*60*1000,
-    Http2ServerRequest
+    httpOnly:true,
+    
   },
 };
 
- app.get((req,res)=>{
-res.send("Hello world");
-  });
+//  app.get((req,res)=>{
+// res.send("Hello world");
+//   });
+
 
 app.use(session(sessionOptions));
 app.use(flash());
